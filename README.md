@@ -68,6 +68,37 @@ pytest
 From `backend/` with the virtual environment active:
 
 ```bash
+pytest
+```
+
+## Run Quality Checks
+
+From `backend/` with the virtual environment active:
+
+```bash
+ruff check .
+ruff format .
+```
+
+## Validate Sample Directory Data
+
+From `backend/` with the virtual environment active:
+
+```bash
+property-extractor validate-sample-directory
+```
+
+Expected output:
+
+```text
+Valid records: 2
+```
+
+## Export Sample Directory Data
+
+From `backend/` with the virtual environment active:
+
+```bash
 property-extractor export-sample-directory
 ```
 
