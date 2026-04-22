@@ -7,8 +7,10 @@ from app.exporters.property_exporter import (
     export_records_to_csv,
     export_records_to_excel,
 )
+from app.exporters.report_exporter import export_report_to_json
 from app.extractors.sample_directory import extract_sample_directory
 from app.importers.florida_health import import_florida_health_records
+from app.reports.validation_report import build_validation_report
 from app.schemas.property_record import PropertyRecord
 from app.validators.duplicates import find_duplicate_records
 
@@ -114,6 +116,7 @@ def validate_sample_directory(
 
 
 @app.command()
+@app.command()
 def import_florida_health(
     input_path: Annotated[
         Path,
@@ -134,11 +137,17 @@ def import_florida_health(
 ) -> None:
     records = import_florida_health_records(input_path)
     duplicates = find_duplicate_records(records)
+    report = build_validation_report(records)
 
     typer.echo(f"Records imported: {len(records)}")
     typer.echo(f"Duplicate records: {len(duplicates)}")
 
     export_records(records, output_dir, "florida_health_records")
+    report_path = export_report_to_json(
+        report,
+        output_dir / "florida_health_validation_report.json",
+    )
+    typer.echo(f"Validation report exported to {report_path}")
 
 
 def export_records(

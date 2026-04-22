@@ -88,5 +88,7 @@ def test_import_florida_health_creates_csv_and_excel(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert (tmp_path / "florida_health_records.csv").exists()
     assert (tmp_path / "florida_health_records.xlsx").exists()
+    assert (tmp_path / "florida_health_validation_report.json").exists()
     assert "Records imported: 1" in result.stdout
     assert "Duplicate records: 0" in result.stdout
+    assert "Validation report exported to" in result.stdout
