@@ -8,6 +8,7 @@ from app.exporters.property_exporter import (
     export_records_to_excel,
 )
 from app.extractors.sample_directory import extract_sample_directory
+from app.importers.florida_health import import_florida_health_records
 from app.schemas.property_record import PropertyRecord
 from app.validators.duplicates import find_duplicate_records
 
@@ -110,6 +111,34 @@ def validate_sample_directory(
 
     typer.echo(f"Valid records: {len(records)}")
     typer.echo(f"Duplicate records: {len(duplicates)}")
+
+
+@app.command()
+def import_florida_health(
+    input_path: Annotated[
+        Path,
+        typer.Option(
+            "--input",
+            "-i",
+            help="Florida Health Excel file to import.",
+        ),
+    ],
+    output_dir: Annotated[
+        Path,
+        typer.Option(
+            "--output-dir",
+            "-o",
+            help="Directory where export files will be written.",
+        ),
+    ] = Path("../exports"),
+) -> None:
+    records = import_florida_health_records(input_path)
+    duplicates = find_duplicate_records(records)
+
+    typer.echo(f"Records imported: {len(records)}")
+    typer.echo(f"Duplicate records: {len(duplicates)}")
+
+    export_records(records, output_dir, "florida_health_records")
 
 
 def export_records(
