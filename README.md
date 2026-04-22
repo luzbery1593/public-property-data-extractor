@@ -22,12 +22,8 @@ The project started with a local HTML fixture for repeatable parsing tests and n
 - Linting and formatting with Ruff
 - Documented methodology for responsible source handling
 
-<img width="886" height="196" alt="image" src="https://github.com/user-attachments/assets/1f58e3e4-3809-4965-a02a-a254b1b38e80" />
 
-
-
-
-
+<img width="1900" height="434" alt="image" src="https://github.com/user-attachments/assets/520121b2-e1bc-4c54-a119-7c965c8cce1d" />
 
 
 ## Tech Stack
@@ -166,18 +162,7 @@ Example validation report:
   "valid_records": 5202
 }
 ```
-<img width="886" height="281" alt="image" src="https://github.com/user-attachments/assets/aa083ae4-d3e0-414e-bd17-a153f3dcd0a4" />
-
-
-
-
-
-
-
-
-
-
-
+<img width="736" height="261" alt="image" src="https://github.com/user-attachments/assets/9c7654ad-67b1-47bc-bc75-8b3a99696b7a" />
 
 
 ## Data Fields
