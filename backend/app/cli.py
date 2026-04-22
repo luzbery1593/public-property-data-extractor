@@ -83,6 +83,32 @@ def export_sample_directory(
     export_records(records, output_dir, "sample_directory_records")
 
 
+@app.command()
+def validate_sample_directory(
+    input_path: Annotated[
+        Path,
+        typer.Option(
+            "--input",
+            "-i",
+            help="HTML file to validate.",
+        ),
+    ] = Path("tests/fixtures/sample_directory.html"),
+    base_url: Annotated[
+        str,
+        typer.Option(
+            "--base-url",
+            help="Base URL used to resolve relative source links.",
+        ),
+    ] = "https://example.com",
+) -> None:
+    records = extract_sample_directory(
+        html_path=input_path,
+        base_url=base_url,
+    )
+
+    typer.echo(f"Valid records: {len(records)}")
+
+
 def export_records(
     records: list[PropertyRecord], output_dir: Path, file_stem: str
 ) -> None:
