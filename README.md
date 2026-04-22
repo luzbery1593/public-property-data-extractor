@@ -4,7 +4,7 @@ A backend data pipeline for converting public property directory and facility da
 
 ## Overview
 
-Public Property Data Extractor demonstrates a structured approach to public data extraction work. It focuses on source traceability, schema validation, text normalization, duplicate detection, and reliable exports.
+Public Property Data Extractor demonstrates a structured approach to public data extraction work. It focuses on source traceability, schema validation, text normalization, duplicate detection, data quality reporting, and reliable exports.
 
 The project started with a local HTML fixture for repeatable parsing tests and now includes an importer for an official Florida Department of Health mobile home and RV park listing.
 
@@ -16,6 +16,7 @@ The project started with a local HTML fixture for repeatable parsing tests and n
 - Typed property records with Pydantic validation
 - Text normalization helpers
 - Duplicate record detection
+- JSON validation report export
 - CSV and Excel exports
 - Automated tests with Pytest
 - Linting and formatting with Ruff
@@ -42,6 +43,7 @@ backend/
     extractors/
     importers/
     normalizers/
+    reports/
     schemas/
     validators/
   tests/
@@ -131,6 +133,30 @@ Duplicate records: 1
 Records exported: 5202
 CSV exported to ../exports/florida_health_records.csv
 Excel exported to ../exports/florida_health_records.xlsx
+Validation report exported to ../exports/florida_health_validation_report.json
+```
+
+Generated files:
+
+```text
+../exports/florida_health_records.csv
+../exports/florida_health_records.xlsx
+../exports/florida_health_validation_report.json
+```
+
+Example validation report:
+
+```json
+{
+  "duplicate_records": 1,
+  "missing_city": 0,
+  "missing_county": 0,
+  "missing_notes": 0,
+  "missing_street_address": 0,
+  "missing_zip_code": 0,
+  "total_records": 5202,
+  "valid_records": 5202
+}
 ```
 
 ## Data Fields
@@ -170,8 +196,8 @@ See `docs/portfolio-notes.md` for project positioning and future improvement ide
 
 ## Future Improvements
 
-- Add validation report exports.
 - Add duplicate review exports.
 - Add CSV input validation.
 - Add optional SQLite storage.
+- Add a generic table importer with configurable column mappings.
 - Add Docker support for reproducible runs.
