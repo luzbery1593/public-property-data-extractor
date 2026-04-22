@@ -1,17 +1,18 @@
 # Public Property Data Extractor
 
-A backend data pipeline for converting public property directory pages into clean, validated CSV and Excel deliverables.
+A backend data pipeline for converting public property directory and facility datasets into clean, validated CSV and Excel deliverables.
 
 ## Overview
 
-Public Property Data Extractor demonstrates a structured approach to public data extraction work. It focuses on repeatable parsing, source traceability, schema validation, text normalization, duplicate detection, and reliable exports.
+Public Property Data Extractor demonstrates a structured approach to public data extraction work. It focuses on source traceability, schema validation, text normalization, duplicate detection, and reliable exports.
 
-The MVP uses a local HTML fixture instead of live websites. This keeps the project testable, stable, and aligned with responsible source usage while still demonstrating the complete backend workflow.
+The project started with a local HTML fixture for repeatable parsing tests and now includes an importer for an official Florida Department of Health mobile home and RV park listing.
 
 ## Features
 
 - Command-line interface for validation and export workflows
 - HTML directory parsing with BeautifulSoup
+- Official Excel dataset import workflow
 - Typed property records with Pydantic validation
 - Text normalization helpers
 - Duplicate record detection
@@ -28,6 +29,7 @@ The MVP uses a local HTML fixture instead of live websites. This keeps the proje
 - BeautifulSoup
 - Pandas
 - OpenPyXL
+- xlrd
 - Pytest
 - Ruff
 
@@ -36,9 +38,10 @@ The MVP uses a local HTML fixture instead of live websites. This keeps the proje
 ```text
 backend/
   app/
-    extractors/
-    normalizers/
     exporters/
+    extractors/
+    importers/
+    normalizers/
     schemas/
     validators/
   tests/
@@ -105,9 +108,34 @@ This creates:
 ../exports/sample_directory_records.xlsx
 ```
 
+## Import Florida Health Mobile Home and RV Park Data
+
+Download the official Excel file from the Florida Department of Health mobile home and RV parks page:
+
+```bash
+mkdir -p data/raw
+curl -L "https://www.floridahealth.gov/wp-content/uploads/2026/02/Current-MHP-List-1.26.2026.xls" -o data/raw/florida_mobile_home_rv_parks.xls
+```
+
+Then run the importer from `backend/` with the virtual environment active:
+
+```bash
+property-extractor import-florida-health --input ../data/raw/florida_mobile_home_rv_parks.xls
+```
+
+Example output:
+
+```text
+Records imported: 5202
+Duplicate records: 1
+Records exported: 5202
+CSV exported to ../exports/florida_health_records.csv
+Excel exported to ../exports/florida_health_records.xlsx
+```
+
 ## Data Fields
 
-The MVP record schema includes:
+The normalized MVP record schema includes:
 
 - property_name
 - street_address
@@ -120,6 +148,14 @@ The MVP record schema includes:
 - collected_at
 - notes
 
+## Official Source
+
+The Florida Health importer uses the official Florida Department of Health mobile home and RV parks listing published from:
+
+```text
+https://www.floridahealth.gov/licensing-regulations/regulated-facilities/mobile-home-rv-parks/
+```
+
 ## Methodology
 
 See `docs/methodology.md` for collection rules, data quality rules, and current limitations.
@@ -128,14 +164,14 @@ See `docs/portfolio-notes.md` for project positioning and future improvement ide
 
 ## Current Limitations
 
-- The current extractor uses a local HTML fixture for repeatable tests.
-- Live source collection is not included in this MVP.
-- New source extractors should be added only after reviewing source access rules and page structure.
+- The HTML extractor uses a local fixture for repeatable tests.
+- The Florida Health importer depends on the structure of the official Excel file.
+- New source importers should be added only after reviewing source access rules and data structure.
 
 ## Future Improvements
 
-- Add source-specific extractors for approved public sources.
+- Add validation report exports.
+- Add duplicate review exports.
 - Add CSV input validation.
-- Add richer duplicate review reports.
 - Add optional SQLite storage.
-- Add Docker support.
+- Add Docker support for reproducible runs.
