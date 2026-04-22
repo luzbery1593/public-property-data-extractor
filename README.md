@@ -2,20 +2,20 @@
 
 Backend-only MVP for collecting, normalizing, validating, and exporting public property directory data from approved sources.
 
-## Goal
+## Overview
 
-Build a maintainable data extraction pipeline focused on:
+This project demonstrates a structured backend pipeline for public data extraction work. It focuses on source traceability, validation, normalization, and clean CSV/Excel deliverables.
 
-- source traceability
-- structured records
-- data normalization
-- validation
-- duplicate detection
+The first MVP uses a local HTML fixture so the extraction process can be tested without depending on live websites.
+
+## Features
+
+- Typed property records with validation
+- Text normalization helpers
+- HTML directory parsing
 - CSV and Excel exports
-
-## Current Scope
-
-The first version targets a small county-level pilot instead of a nationwide dataset.
+- Command-line interface
+- Automated tests
 
 ## Tech Stack
 
@@ -28,7 +28,7 @@ The first version targets a small county-level pilot instead of a nationwide dat
 - Pytest
 - Ruff
 
-## Repository Structure
+## Project Structure
 
 ```text
 backend/
@@ -40,6 +40,48 @@ backend/
     validators/
   tests/
 docs/
-data/
-  samples/
 exports/
+```
+
+## Setup
+
+From the project root:
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -e ".[dev]"
+```
+
+## Run Tests
+
+From `backend/` with the virtual environment active:
+
+```bash
+pytest
+```
+
+## Export Sample Directory Data
+
+From `backend/` with the virtual environment active:
+
+```bash
+property-extractor export-sample-directory
+```
+
+This creates:
+
+```text
+../exports/sample_directory_records.csv
+../exports/sample_directory_records.xlsx
+```
+
+## Methodology
+
+See `docs/methodology.md` for collection rules, data quality rules, and current limitations.
+
+## Status
+
+MVP backend pipeline in progress.
