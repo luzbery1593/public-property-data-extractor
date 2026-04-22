@@ -9,6 +9,7 @@ from app.exporters.property_exporter import (
 )
 from app.extractors.sample_directory import extract_sample_directory
 from app.schemas.property_record import PropertyRecord
+from app.validators.duplicates import find_duplicate_records
 
 app = typer.Typer(
     help="Collect and export public property directory data.",
@@ -105,8 +106,10 @@ def validate_sample_directory(
         html_path=input_path,
         base_url=base_url,
     )
+    duplicates = find_duplicate_records(records)
 
     typer.echo(f"Valid records: {len(records)}")
+    typer.echo(f"Duplicate records: {len(duplicates)}")
 
 
 def export_records(

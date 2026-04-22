@@ -35,3 +35,18 @@ def test_export_sample_directory_creates_csv_and_excel(tmp_path: Path) -> None:
     assert (tmp_path / "sample_directory_records.csv").exists()
     assert (tmp_path / "sample_directory_records.xlsx").exists()
     assert "Records exported: 2" in result.stdout
+
+
+def test_validate_sample_directory_reports_valid_and_duplicate_records() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "validate-sample-directory",
+            "--input",
+            "tests/fixtures/sample_directory.html",
+        ],
+    )
+
+    assert result.exit_code == 0
+    assert "Valid records: 2" in result.stdout
+    assert "Duplicate records: 0" in result.stdout
