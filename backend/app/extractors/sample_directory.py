@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from app.normalizers.text import normalize_optional_text, normalize_required_text
 from app.schemas.property_record import PropertyRecord
 
-
 CITY_STATE_ZIP_PATTERN = re.compile(
     r"^(?P<city>.*?),\s*(?P<state>[A-Za-z]{2})\s*(?P<zip_code>\d{5}(?:-\d{4})?)?$"
 )
@@ -40,7 +39,11 @@ def extract_sample_directory(
         county_element = card.select_one(".county")
         link_element = card.select_one(".property-link")
 
-        if name_element is None or city_state_zip_element is None or link_element is None:
+        if (
+            name_element is None
+            or city_state_zip_element is None
+            or link_element is None
+        ):
             continue
 
         city, state, zip_code = parse_city_state_zip(city_state_zip_element.get_text())

@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Annotated
 
 import typer
 
@@ -36,12 +37,14 @@ def build_sample_record() -> PropertyRecord:
 
 @app.command()
 def export_sample(
-    output_dir: Path = typer.Option(
-        Path("../exports"),
-        "--output-dir",
-        "-o",
-        help="Directory where sample export files will be written.",
-    ),
+    output_dir: Annotated[
+        Path,
+        typer.Option(
+            "--output-dir",
+            "-o",
+            help="Directory where sample export files will be written.",
+        ),
+    ] = Path("../exports"),
 ) -> None:
     records = [build_sample_record()]
     export_records(records, output_dir, "sample_records")
@@ -49,23 +52,29 @@ def export_sample(
 
 @app.command()
 def export_sample_directory(
-    input_path: Path = typer.Option(
-        Path("tests/fixtures/sample_directory.html"),
-        "--input",
-        "-i",
-        help="HTML file to parse.",
-    ),
-    output_dir: Path = typer.Option(
-        Path("../exports"),
-        "--output-dir",
-        "-o",
-        help="Directory where export files will be written.",
-    ),
-    base_url: str = typer.Option(
-        "https://example.com",
-        "--base-url",
-        help="Base URL used to resolve relative source links.",
-    ),
+    input_path: Annotated[
+        Path,
+        typer.Option(
+            "--input",
+            "-i",
+            help="HTML file to parse.",
+        ),
+    ] = Path("tests/fixtures/sample_directory.html"),
+    output_dir: Annotated[
+        Path,
+        typer.Option(
+            "--output-dir",
+            "-o",
+            help="Directory where export files will be written.",
+        ),
+    ] = Path("../exports"),
+    base_url: Annotated[
+        str,
+        typer.Option(
+            "--base-url",
+            help="Base URL used to resolve relative source links.",
+        ),
+    ] = "https://example.com",
 ) -> None:
     records = extract_sample_directory(
         html_path=input_path,
@@ -74,7 +83,9 @@ def export_sample_directory(
     export_records(records, output_dir, "sample_directory_records")
 
 
-def export_records(records: list[PropertyRecord], output_dir: Path, file_stem: str) -> None:
+def export_records(
+    records: list[PropertyRecord], output_dir: Path, file_stem: str
+) -> None:
     csv_path = export_records_to_csv(records, output_dir / f"{file_stem}.csv")
     excel_path = export_records_to_excel(records, output_dir / f"{file_stem}.xlsx")
 

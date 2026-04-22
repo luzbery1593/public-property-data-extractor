@@ -4,7 +4,6 @@ import pandas as pd
 
 from app.schemas.property_record import PropertyRecord
 
-
 EXPORT_COLUMNS = [
     "property_name",
     "street_address",
@@ -20,10 +19,7 @@ EXPORT_COLUMNS = [
 
 
 def records_to_dataframe(records: list[PropertyRecord]) -> pd.DataFrame:
-    rows = [
-        record.model_dump(mode="json")
-        for record in records
-    ]
+    rows = [record.model_dump(mode="json") for record in records]
 
     return pd.DataFrame(rows, columns=EXPORT_COLUMNS)
 
