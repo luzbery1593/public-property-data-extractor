@@ -4,7 +4,7 @@ Backend-only MVP for collecting, normalizing, validating, and exporting public p
 
 ## Overview
 
-This project demonstrates a structured backend pipeline for public data extraction work. It focuses on source traceability, validation, normalization, and clean CSV/Excel deliverables.
+This project demonstrates a structured backend pipeline for public data extraction work. It focuses on source traceability, validation, normalization, duplicate detection, and clean CSV/Excel deliverables.
 
 The first MVP uses a local HTML fixture so the extraction process can be tested without depending on live websites.
 
@@ -13,9 +13,11 @@ The first MVP uses a local HTML fixture so the extraction process can be tested 
 - Typed property records with validation
 - Text normalization helpers
 - HTML directory parsing
+- Duplicate record detection
 - CSV and Excel exports
 - Command-line interface
 - Automated tests
+- Linting and formatting with Ruff
 
 ## Tech Stack
 
@@ -63,14 +65,6 @@ From `backend/` with the virtual environment active:
 pytest
 ```
 
-## Export Sample Directory Data
-
-From `backend/` with the virtual environment active:
-
-```bash
-pytest
-```
-
 ## Run Quality Checks
 
 From `backend/` with the virtual environment active:
@@ -92,6 +86,7 @@ Expected output:
 
 ```text
 Valid records: 2
+Duplicate records: 0
 ```
 
 ## Export Sample Directory Data
