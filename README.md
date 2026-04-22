@@ -162,9 +162,6 @@ Example validation report:
   "valid_records": 5202
 }
 ```
-<img width="736" height="261" alt="image" src="https://github.com/user-attachments/assets/9c7654ad-67b1-47bc-bc75-8b3a99696b7a" />
-
-
 ## Data Fields
 
 The normalized MVP record schema includes:
