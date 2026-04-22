@@ -1,23 +1,24 @@
 # Public Property Data Extractor
 
-Backend-only MVP for collecting, normalizing, validating, and exporting public property directory data from approved sources.
+A backend data pipeline for converting public property directory pages into clean, validated CSV and Excel deliverables.
 
 ## Overview
 
-This project demonstrates a structured backend pipeline for public data extraction work. It focuses on source traceability, validation, normalization, duplicate detection, and clean CSV/Excel deliverables.
+Public Property Data Extractor demonstrates a structured approach to public data extraction work. It focuses on repeatable parsing, source traceability, schema validation, text normalization, duplicate detection, and reliable exports.
 
-The first MVP uses a local HTML fixture so the extraction process can be tested without depending on live websites.
+The MVP uses a local HTML fixture instead of live websites. This keeps the project testable, stable, and aligned with responsible source usage while still demonstrating the complete backend workflow.
 
 ## Features
 
-- Typed property records with validation
+- Command-line interface for validation and export workflows
+- HTML directory parsing with BeautifulSoup
+- Typed property records with Pydantic validation
 - Text normalization helpers
-- HTML directory parsing
 - Duplicate record detection
 - CSV and Excel exports
-- Command-line interface
-- Automated tests
+- Automated tests with Pytest
 - Linting and formatting with Ruff
+- Documented methodology for responsible source handling
 
 ## Tech Stack
 
@@ -104,10 +105,37 @@ This creates:
 ../exports/sample_directory_records.xlsx
 ```
 
+## Data Fields
+
+The MVP record schema includes:
+
+- property_name
+- street_address
+- city
+- state
+- county
+- zip_code
+- source_name
+- source_url
+- collected_at
+- notes
+
 ## Methodology
 
 See `docs/methodology.md` for collection rules, data quality rules, and current limitations.
 
-## Status
+See `docs/portfolio-notes.md` for project positioning and future improvement ideas.
 
-MVP backend pipeline in progress.
+## Current Limitations
+
+- The current extractor uses a local HTML fixture for repeatable tests.
+- Live source collection is not included in this MVP.
+- New source extractors should be added only after reviewing source access rules and page structure.
+
+## Future Improvements
+
+- Add source-specific extractors for approved public sources.
+- Add CSV input validation.
+- Add richer duplicate review reports.
+- Add optional SQLite storage.
+- Add Docker support.
