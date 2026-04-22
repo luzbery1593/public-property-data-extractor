@@ -1,4 +1,6 @@
 .venv/
+**/.venv/
+backend/.venv/
 venv/
 env/
 
@@ -14,8 +16,12 @@ __pycache__/
 .env.*
 !.env.example
 
+node_modules/
+dist/
+build/
+
 exports/*
-!exports/.gitkeep
+!exports/README.md
 
 data/raw/
 data/processed/
